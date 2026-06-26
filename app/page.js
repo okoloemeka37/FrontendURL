@@ -56,7 +56,7 @@ const clipSubmit=async() => {
         <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2 font-bold text-xl tracking-tight bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
             <span>🔗</span>
-            <span>LinkCraft</span>
+            <span>ZylerCraft</span>
           </div>
           <nav className="flex items-center space-x-6 text-sm font-medium text-slate-400">
             <a href="#features" className="hover:text-slate-200 transition-colors">Features</a>
@@ -141,7 +141,7 @@ const clipSubmit=async() => {
       {/* Footer */}
       <footer className="border-t border-slate-900 bg-slate-950 text-slate-600 text-xs py-6">
         <div className="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>&copy; LinkCraft Inc. All rights reserved.</div>
+          <div>&copy; ZylerCraft Inc. All rights reserved.</div>
           <div className="flex space-x-4">
             <a href="#privacy" className="hover:text-slate-400 transition-colors">Privacy Policy</a>
             <a href="#terms" className="hover:text-slate-400 transition-colors">Terms of Service</a>
