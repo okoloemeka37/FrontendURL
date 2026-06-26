@@ -33,7 +33,7 @@ const clipSubmit=async() => {
     setError(prev=>({...prev,clip:"This Field Is Required"}))
   }else{
       try {
-         const resp=await  fetch('http://localhost:5000/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})
+         const resp=await  fetch('https://backendurl-wt2b.onrender.com/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})
           const data=await resp.json()
          if (!resp.ok) {
             setError(data)

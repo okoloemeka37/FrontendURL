@@ -8,7 +8,7 @@ export default async function RedirectPage({ params }) {
   let targetUrl = null;
 
   try {
-    const resp = await fetch(`http://localhost:5000/api/user/getClip?slug=${slug}`);
+    const resp = await fetch(`https://backendurl-wt2b.onrender.com/api/user/getClip?slug=${slug}`);
     const data = await resp.json();
     
     if (resp.ok && data?.url) {
