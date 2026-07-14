@@ -1,15 +1,17 @@
 'use client'
 
 import { useEffect, useRef, useState } from "react";
+import QRGenerator from "./components/QRCmponents";
 
 
-export default function Home() {
+export default function Page() {
   const clipRef = useRef(null);
   const alertRef=useRef(null);
 
   const [clip, setClip] = useState('')
   const [shortURL, setShortURL] = useState('')
   const [error, setError] = useState({clip:''})
+  const [Onload,setOnload]=useState(false)
 
 async function getClip() {
   const gtClip=await navigator.clipboard.readText()
@@ -29,20 +31,28 @@ async function getClip() {
   
 const clipSubmit=async() => {
   setError({clip:''});
+  setOnload(true)
   if (clip.length ===0) {
     setError(prev=>({...prev,clip:"This Field Is Required"}))
   }else{
       try {
-         const resp=await  fetch('https://backendurl-wt2b.onrender.com/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})
-          const data=await resp.json()
+        // const resp=await  fetch('https://backendurl-wt2b.onrender.com/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})
+         const resp=await  fetch('http://localhost:5000/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})  
+        const data=await resp.json()
          if (!resp.ok) {
             setError(data)
          }else{setShortURL(data.shortURL)}
 
         } catch (error) {
         console.log(error)
+      } finally{
+        setOnload(false)
       }
   }
+}
+
+const downloadQR= ()=>{
+
 }
 
   return (
@@ -84,6 +94,7 @@ const clipSubmit=async() => {
             <p className="text-slate-400 text-lg sm:text-xl max-w-xl mx-auto font-light">
               Create clean, memorable, and trackable short URLs in seconds. Built for speed and security.
             </p>
+             
           </div>
 
           {/* Generator Form Card */}
@@ -97,31 +108,51 @@ const clipSubmit=async() => {
                   className="w-full bg-slate-950/80 border border-slate-700 rounded-xl px-4 py-3.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm"
                 />
               </div>
-              <p onClick={clipSubmit}
-                className="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-medium px-6 py-3.5 rounded-xl shadow-lg shadow-indigo-600/20 transition-all text-sm shrink-0 flex items-center justify-center cursor-pointer"
-              >
-                Shorten URL
-              </p>
+              <p onClick={clipSubmit} className="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-medium px-6 py-3.5 rounded-xl shadow-lg shadow-indigo-600/20 transition-all text-sm shrink-0 flex items-center justify-center gap-2 cursor-pointer">{Onload && (<span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>)} Shorten URL</p>
             </div>
 
               <p className="text-red-600">{error['clip']}</p>
 
             {/* Results Output Placeholder (Toggle/render with your own logic) */}
-            <div className="pt-4 border-t border-slate-800">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
-                Your Shortened Link
-              </label>
-              <div className="flex items-center justify-between bg-slate-950/50 border border-slate-800 rounded-xl p-3 pl-4">
-                <span className="text-cyan-400 font-medium break-all text-sm">
-                  {shortURL}
-                </span>
-                <p onClick={copyShort}
-                  className="ml-4 px-4 py-2 rounded-lg text-xs font-semibold tracking-wide bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all shrink-0 cursor-pointer"
-                >
-                  Copy Link
-                </p>
-              </div>
-            </div>
+           <div className="pt-4 border-t border-slate-800 space-y-3">
+  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
+    Your Shortened Link & QR Code
+  </label>
+  
+  <div className="flex flex-col gap-4 items-stretch">
+    {/* Left: Link display & Copy button */}
+    <div className="flex-grow flex items-center justify-between bg-slate-950/50 border border-slate-800 rounded-xl p-3 pl-4">
+      <span className="text-cyan-400 font-medium break-all text-sm">
+        {shortURL}
+      </span>
+      <p 
+        onClick={copyShort}
+        className="ml-4 px-4 py-2 rounded-lg text-xs font-semibold tracking-wide bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all shrink-0 cursor-pointer"
+      >
+        Copy Link
+      </p>
+    </div>
+
+    {/* Right: QR Code Visualizer & Download Action */}
+    <div className="flex items-center gap-3 bg-slate-950/50 border border-slate-800 rounded-xl p-3 shrink-0">
+      {/* QR Code Wrapper (Replace svg inside with your canvas or custom QR generator output) */}
+      <div className="bg-white p-1.5 rounded-lg shrink-0">
+       <QRGenerator value={shortURL} width={70} height={70}/>
+      </div>
+      
+      {/* Download Action Button */}
+      <p 
+        onClick={downloadQR}
+        className="px-4 py-2 rounded-lg text-xs font-semibold tracking-wide bg-indigo-600 hover:bg-indigo-500 text-white transition-all shrink-0 cursor-pointer flex items-center gap-1.5"
+      >
+        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+        </svg>
+        QR Code
+      </p>
+    </div>
+  </div>
+</div>
           </div>
 
           {/* Quick Stats / Trust Badges */}

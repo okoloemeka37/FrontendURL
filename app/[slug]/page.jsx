@@ -8,7 +8,8 @@ export default async function RedirectPage({ params }) {
   let targetUrl = null;
 
   try {
-    const resp = await fetch(`https://backendurl-wt2b.onrender.com/api/user/getClip?slug=${slug}`);
+    const resp = await fetch(`http://localhost:5000/api/user/getClip?slug=${slug}`);
+    //const resp = await fetch(`https://backendurl-wt2b.onrender.com/api/user/getClip?slug=${slug}`);
     const data = await resp.json();
     
     if (resp.ok && data?.url) {
@@ -32,7 +33,7 @@ export default async function RedirectPage({ params }) {
     </div>
     <h1 className="text-xl font-semibold text-slate-100">Link Lost in Space</h1>
     <p className="mt-1 text-sm text-slate-400 max-w-sm">
-      This link doesn't exist, has expired, or the clips were cleared out.
+      This link does not exist, has expired, or the clips were cleared out.
     </p>
     <Link 
       href="/" 
