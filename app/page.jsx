@@ -6,6 +6,7 @@ import QRGenerator from "./components/QRCmponents";
 
 export default function Page() {
   const clipRef = useRef(null);
+  const qrRef = useRef();
   const alertRef=useRef(null);
 
   const [clip, setClip] = useState('')
@@ -36,8 +37,8 @@ const clipSubmit=async() => {
     setError(prev=>({...prev,clip:"This Field Is Required"}))
   }else{
       try {
-        // const resp=await  fetch('https://backendurl-wt2b.onrender.com/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})
-         const resp=await  fetch('http://localhost:5000/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})  
+        const resp=await  fetch('https://backendurl-wt2b.onrender.com/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})
+        // const resp=await  fetch('http://localhost:5000/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})  
         const data=await resp.json()
          if (!resp.ok) {
             setError(data)
@@ -137,14 +138,11 @@ const downloadQR= ()=>{
     <div className="flex items-center gap-3 bg-slate-950/50 border border-slate-800 rounded-xl p-3 shrink-0">
       {/* QR Code Wrapper (Replace svg inside with your canvas or custom QR generator output) */}
       <div className="bg-white p-1.5 rounded-lg shrink-0">
-       <QRGenerator value={shortURL} width={70} height={70}/>
+       <QRGenerator  ref={qrRef} value={shortURL} width={70} height={70}/>
       </div>
       
       {/* Download Action Button */}
-      <p 
-        onClick={downloadQR}
-        className="px-4 py-2 rounded-lg text-xs font-semibold tracking-wide bg-indigo-600 hover:bg-indigo-500 text-white transition-all shrink-0 cursor-pointer flex items-center gap-1.5"
-      >
+      <p onClick={() => qrRef.current?.download("my-short-link", "png")}  className="px-4 py-2 rounded-lg text-xs font-semibold tracking-wide bg-indigo-600 hover:bg-indigo-500 text-white transition-all shrink-0 cursor-pointer flex items-center gap-1.5">
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
         </svg>

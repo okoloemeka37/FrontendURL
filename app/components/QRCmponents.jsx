@@ -1,8 +1,16 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from "react";
 
-export default function QRGenerator({ value,width,height }) {
+const QRGenerator = forwardRef(function QRGenerator(
+  { value, width, height },
+  ref
+) {
   const containerRef = useRef(null);
   const qrCodeRef = useRef(null);
 
@@ -11,12 +19,15 @@ export default function QRGenerator({ value,width,height }) {
       const { default: QRCodeStyling } = await import("qr-code-styling");
 
       qrCodeRef.current = new QRCodeStyling({
-        width: width,
-        height: height,
+        width,
+        height,
         data: value,
       });
 
-      qrCodeRef.current.append(containerRef.current);
+      if (containerRef.current) {
+        containerRef.current.innerHTML = "";
+        qrCodeRef.current.append(containerRef.current);
+      }
     }
 
     loadQR();
@@ -25,11 +36,22 @@ export default function QRGenerator({ value,width,height }) {
   useEffect(() => {
     qrCodeRef.current?.update({
       data: value,
+      width,
+      height,
     });
-  }, [value]);
+  }, [value, width, height]);
 
-
-  
+  // Expose methods to the parent
+  useImperativeHandle(ref, () => ({
+    download(name = "my-qr-code", extension = "png") {
+      qrCodeRef.current?.download({
+        name,
+        extension,
+      });
+    },
+  }));
 
   return <div ref={containerRef} />;
-}
+});
+
+export default QRGenerator;
