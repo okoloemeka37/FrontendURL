@@ -1,29 +1,41 @@
-// app/[slug]/page.tsx
+import { headers } from "next/headers";
+import Link from "next/link";
 import { permanentRedirect } from "next/navigation";
 
-import Link from "next/link";
-
 export default async function RedirectPage({ params }) {
-  const { slug } = await params;
-  let targetUrl = null;
+    const { slug } = await params;
 
-  try {
-    //const resp = await fetch(`http://localhost:5000/api/user/getClip?slug=${slug}`);
-    const resp = await fetch(`https://backendurl-wt2b.onrender.com/api/user/getClip?slug=${slug}`);
-    const data = await resp.json();
+    let targetUrl = null;
+
+    if (!slug.startsWith("_")) {} else {
+        try {
+            const headersList = await headers();
+
+            const userAgent = headersList.get("user-agent");
+
+            const resp = await fetch(
+                `http://localhost:5000/api/user/getClip?slug=${slug}`,
+                {
+                    headers: {
+                        "user-agent": userAgent ?? "",
+                    },
+                }
+            );
+
+            const data = await resp.json();
+
+            if (resp.ok && data?.url) {
+                targetUrl = data.url;
+            }
+        } catch (error) {
+            console.error("Fetch error:", error);
+        }
     
-    if (resp.ok && data?.url) {
-      targetUrl = data.url;
-    }
-  } catch (error) {
- 
-    console.error("Fetch error:", error);
-  }
 
- 
-  if (targetUrl) {
-    permanentRedirect(targetUrl);
-  }
+    if (targetUrl) {
+        permanentRedirect(targetUrl);
+    }
+
 
   // Fallback if the slug wasn't found or the API failed
   return (
@@ -42,5 +54,6 @@ export default async function RedirectPage({ params }) {
       Create Your Own Link
     </Link>
   </div>
-  );
+  );}
 }
+

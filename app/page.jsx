@@ -2,9 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import QRGenerator from "./components/QRCmponents";
-
+import Link from "next/link";
+import HeaderComponents from "./components/HeaderComponents";
+import { useAuth } from "./context/AuthContext";
 
 export default function Page() {
+ const{userCred} =useAuth()
   const clipRef = useRef(null);
   const qrRef = useRef();
   const alertRef=useRef(null);
@@ -37,8 +40,12 @@ const clipSubmit=async() => {
     setError(prev=>({...prev,clip:"This Field Is Required"}))
   }else{
       try {
-        const resp=await  fetch('https://backendurl-wt2b.onrender.com/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})
-        // const resp=await  fetch('http://localhost:5000/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})  
+        let bod={clip};
+        if (userCred['name'].length !==0) {
+          bod['userId']=userCred['id'];
+        }else{bod['userId']=0}
+        //const resp=await  fetch('https://backendurl-wt2b.onrender.com/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})
+         const resp=await  fetch('http://localhost:5000/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({bod})})  
         const data=await resp.json()
          if (!resp.ok) {
             setError(data)
@@ -63,20 +70,7 @@ const downloadQR= ()=>{
        <p ref={alertRef} className="fixed hidden bottom-6 right-6 z-50 flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium tracking-wide px-4 py-2.5 rounded-xl shadow-lg shadow-emerald-950/20 backdrop-blur-md animate-fade-in-up"><span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>Link successfully copied!</p>
 
       {/* Header */}
-      <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center space-x-2 font-bold text-xl tracking-tight bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
-            <span>Zyler</span>
-          </div>
-          <nav className="flex items-center space-x-6 text-sm font-medium text-slate-400">
-            <a href="#features" className="hover:text-slate-200 transition-colors">Features</a>
-            <a href="#api" className="hover:text-slate-200 transition-colors">API</a>
-            <a href="https://github.com/okoloemeka37" target="_blank" rel="noreferrer" className="bg-slate-800 hover:bg-slate-700 text-slate-100 px-4 py-2 rounded-lg transition-all">
-              GitHub
-            </a>
-          </nav>
-        </div>
-      </header>
+      <HeaderComponents />
 
       {/* Hero / Main Section */}
       <main className="flex-grow flex items-center justify-center px-4 py-20 relative overflow-hidden">
