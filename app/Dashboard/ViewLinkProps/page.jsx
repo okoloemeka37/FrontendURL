@@ -5,8 +5,18 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState ,useRef} from "react";
 import EditDestination from "../../components/EditDestination";
+import { Suspense } from "react";
 
-export default function LinkDetailsPage() {
+
+export default function Page(){
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <LinkDetailsPage />
+        </Suspense>
+    );
+}
+
+function LinkDetailsPage() {
   let downUrl='http://localhost:3000/'
   const [link, setlink] = useState({})
   const [device, setdevice] = useState([{}]);
