@@ -1,6 +1,6 @@
 'use client'
 import axios from 'axios'
-const Server_Url="https://backend-url-pied.vercel.app/";
+const Server_Url="https://backend-url-pied.vercel.app";
 
 async function getDash(){
   try {
