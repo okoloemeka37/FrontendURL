@@ -1,9 +1,10 @@
 'use client'
 import axios from 'axios'
+const Server_Url="backend-fvmolkiwo-zylers-projects-ce4b1a8c.vercel.app";
 
 async function getDash(){
   try {
-    const resp= await axios.get("http://localhost:5000/api/Admin/Dashboard",{withCredentials:true});
+    const resp= await axios.get(`${Server_Url}/api/Admin/Dashboard`,{withCredentials:true});
     console.log(resp.data)
   return {status:200,data:resp.data.data}
   } catch (error) {
@@ -19,7 +20,7 @@ async function getDash(){
 
 
   try {
-    const resp= await axios.post("http://localhost:5000/api/Admin/linkDetails",{id:id},{withCredentials:true});
+    const resp= await axios.post(`${Server_Url}/api/Admin/linkDetails`,{id:id},{withCredentials:true});
     console.log(resp.data)
   return {status:200,data:resp.data.data}
   } catch (error) {
@@ -35,7 +36,7 @@ async function getDash(){
 
 
   try {
-    const resp= await axios.post("http://localhost:5000/api/Admin/EditLinkDestination",{body:body},{withCredentials:true});
+    const resp= await axios.post(`${Server_Url}/api/Admin/EditLinkDestination`,{body:body},{withCredentials:true});
     console.log(resp.data)
   return {status:201,data:resp.data.data}
   } catch (error) {
@@ -47,7 +48,7 @@ async function getDash(){
 
 export async function getLink(){
   try {
-    const resp= await axios.get("http://localhost:5000/api/Admin/Link",{withCredentials:true});
+    const resp= await axios.get(`${Server_Url}/api/Admin/Link`,{withCredentials:true});
     console.log(resp.data)
   return {status:200,data:resp.data.data}
   } catch (error) {

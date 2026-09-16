@@ -17,7 +17,8 @@ export default function Page(){
 }
 
 function LinkDetailsPage() {
-  let downUrl='http://localhost:3000/'
+  //let downUrl='http://localhost:3000/'
+    let downUrl='https://frontend-url-blush.vercel.app/'
   const [link, setlink] = useState({})
   const [device, setdevice] = useState([{}]);
   const [location, setlocation] = useState([{}])

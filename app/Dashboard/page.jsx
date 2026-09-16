@@ -15,7 +15,8 @@ export function humanDate(date) {
 
 
 export default function AdminDashboardPage() {
-  let downUrl='http://localhost:3000/'
+  //let downUrl='http://localhost:3000/'
+  let downUrl='https://frontend-url-blush.vercel.app/'
     const { userCred, logout } = useAuth();
     const [links, setlinks] = useState([]);
     const [totalC,setTotalC]=useState(0)

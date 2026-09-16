@@ -1,6 +1,7 @@
 'use client'
 import axios from 'axios'
-const AuthUrl="http://localhost:5000/api/Auth"
+//const AuthUrl="http://localhost:5000/api/Auth"
+const AuthUrl="backend-fvmolkiwo-zylers-projects-ce4b1a8c.vercel.app/api/Auth"
 function RegisterController(RegData){
 const RegKeys=Object.keys(RegData);
 

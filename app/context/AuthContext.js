@@ -7,7 +7,7 @@ const AuthContext=createContext({
     isAuthenticated:false,
    login:(data)=>{},
     logout:()=>{}, 
-    Server_Url:'',
+    Server_Url:'backend-fvmolkiwo-zylers-projects-ce4b1a8c.vercel.app"',
     userCred: {id:'',name: '', email: ''}
 
 });
@@ -18,7 +18,8 @@ export const Authprovider=({ children })=>{
   const router=useRouter(); 
  const [userCred, setuserCred] = useState({name:'',email:''})
 
- const [Server_Url]=useState("http://localhost:5000/api/")
+// const [Server_Url]=useState("http://localhost:5000/api/")
+ const [Server_Url]=useState("backend-fvmolkiwo-zylers-projects-ce4b1a8c.vercel.app")
     const [isAuthenticated, setisAuthenticated] = useState(false);
  
      let isPublicPage; //= pathname === "/";
@@ -31,7 +32,7 @@ export const Authprovider=({ children })=>{
  
 async function checkAuth() {
   try {
-    const resp= await axios.get("http://localhost:5000/api/auth/checkAuth",{withCredentials:true});
+    const resp= await axios.get(`${Server_Url}/api/auth/checkAuth`,{withCredentials:true});
    setuserCred(resp.data.user)
   console.log(resp.data.user)
 
@@ -66,7 +67,7 @@ async function checkAuth() {
 
 async function logout() {
     try {
-      const resp =await axios.get("http://localhost:5000/api/auth/logout", {withCredentials:true});
+      const resp =await axios.get(`${Server_Url}/api/auth/logout`, {withCredentials:true});
       console.log(resp.data)
       setisAuthenticated(false);
       setuserCred({name:'',email:''})
