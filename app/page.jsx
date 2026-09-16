@@ -44,8 +44,8 @@ const clipSubmit=async() => {
         if (userCred['name'].length !==0) {
           bod['userId']=userCred['id'];
         }else{bod['userId']=0}
-        //const resp=await  fetch('https://backendurl-wt2b.onrender.com/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})
-         const resp=await  fetch('http://localhost:5000/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({bod})})  
+        //const resp=await  fetch('http://localhost:5000/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({clip})})
+         const resp=await  fetch('https://backend-url-pied.vercel.app/api/user/postClip',{method:"POST",headers: {"Content-Type": "application/json",},body:JSON.stringify({bod})})  
         const data=await resp.json()
          if (!resp.ok) {
             setError(data)
