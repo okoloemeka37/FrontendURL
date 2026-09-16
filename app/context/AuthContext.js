@@ -7,7 +7,7 @@ const AuthContext=createContext({
     isAuthenticated:false,
    login:(data)=>{},
     logout:()=>{}, 
-    Server_Url:'backend-fvmolkiwo-zylers-projects-ce4b1a8c.vercel.app"',
+    Server_Url:'https://backend-url-pied.vercel.app/',
     userCred: {id:'',name: '', email: ''}
 
 });
@@ -19,7 +19,7 @@ export const Authprovider=({ children })=>{
  const [userCred, setuserCred] = useState({name:'',email:''})
 
 // const [Server_Url]=useState("http://localhost:5000/api/")
- const [Server_Url]=useState("backend-fvmolkiwo-zylers-projects-ce4b1a8c.vercel.app")
+ const [Server_Url]=useState("https://backend-url-pied.vercel.app/")
     const [isAuthenticated, setisAuthenticated] = useState(false);
  
      let isPublicPage; //= pathname === "/";
