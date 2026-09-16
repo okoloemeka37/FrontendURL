@@ -1,7 +1,7 @@
 'use client'
 import axios from 'axios'
 //const AuthUrl="http://localhost:5000/api/Auth"
-const AuthUrl="https://backend-url-pied.vercel.app"
+const AuthUrl="https://backend-url-pied.vercel.app/api/Auth"
 function RegisterController(RegData){
 const RegKeys=Object.keys(RegData);
 
