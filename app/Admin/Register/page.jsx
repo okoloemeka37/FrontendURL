@@ -13,20 +13,25 @@ const {login}=useAuth()
   const [RegData, setRegData] = useState({name:'',email:'',password:'','terms':''});
     const[error,setError]=useState({name:'',email:'',password:'','terms':'',gen:''});
     const[succes,setSuccess]=useState('')
+    const [Onload, setOnload] = useState(false)
 
   const handleSubmit=async(e)=>{
       e.preventDefault();
+      setOnload(true)
       setError({name:'',email:'',password:'','terms':'',gen:''})
        const authCont=await RegisterController(RegData)
-
+      
        console.log(authCont)
         if (authCont.status==402 || authCont.status==400 ||authCont.status ==500) {
           setError(authCont.error);
+          setOnload(false)
        }else{
           if (authCont.status==201) {
               setSuccess(authCont.message)
               console.log(authCont.user)
+              
                login(authCont)
+               setOnload(false)
                router.push("/Dashboard")
           }
        }
@@ -126,8 +131,8 @@ const {login}=useAuth()
         {/* Register Button */}
         <button
           type="submit"
-          className="w-full py-3 px-4 rounded-xl text-sm font-semibold tracking-wide text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 transition-all shadow-lg shadow-emerald-500/10 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 cursor-pointer"
-        >
+          className="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-medium px-6 py-3.5 rounded-xl shadow-lg shadow-indigo-600/20 transition-all text-sm shrink-0 flex items-center justify-center gap-2 cursor-pointer w-full"
+        >{Onload && (<span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>)}
           Create Account
         </button>
       </form>
