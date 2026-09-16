@@ -14,7 +14,7 @@ export default async function RedirectPage({ params }) {
             const userAgent = headersList.get("user-agent");
 
             const resp = await fetch(
-                `http://localhost:5000/api/user/getClip?slug=${slug}`,
+                `https://backend-url-pied.vercel.app/api/user/getClip?slug=${slug}`,
                 {
                     headers: {
                         "user-agent": userAgent ?? "",
