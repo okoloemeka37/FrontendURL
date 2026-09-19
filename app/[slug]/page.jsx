@@ -4,8 +4,22 @@ import { permanentRedirect } from "next/navigation";
 
 export default async function RedirectPage({ params }) {
     const { slug } = await params;
+    const headersList = await headers();
 
-    let targetUrl = null;
+const ip = headersList.get("x-vercel-forwarded-for");
+
+const country = headersList.get("x-vercel-ip-country");
+const region = headersList.get("x-vercel-ip-country-region");
+const city = headersList.get("x-vercel-ip-city");
+
+console.log('visit:',ip,country,region,city)
+
+return (<>
+<p>hello</p>
+</>)
+
+
+  /*   let targetUrl = null;
 
     if (!slug.startsWith("_")) {} else {
         try {
@@ -14,7 +28,7 @@ export default async function RedirectPage({ params }) {
             const userAgent = headersList.get("user-agent");
 
             const resp = await fetch(
-                `https://backend-url-pied.vercel.app/api/user/getClip?slug=${slug}`,
+                `http://localhost:5000/api/user/getClip?slug=${slug}`,
                 {
                     headers: {
                         "user-agent": userAgent ?? "",
@@ -54,6 +68,6 @@ export default async function RedirectPage({ params }) {
       Create Your Own Link
     </Link>
   </div>
-  );}
+  );} */
 }
 
