@@ -35,7 +35,7 @@ const [Server_Url]=useState("https://backend-url-pied.vercel.app")
  
 async function checkAuth() {
   try {
-    const resp= await axios.get(`${Server_Url}api/auth/checkAuth`,{withCredentials:true});
+    const resp= await axios.get(`${Server_Url}/api/auth/checkAuth`,{withCredentials:true});
    setuserCred(resp.data.user)
   console.log(resp.data.user)
 
@@ -70,7 +70,7 @@ async function checkAuth() {
 
 async function logout() {
     try {
-      const resp =await axios.get(`${Server_Url}api/auth/logout`, {withCredentials:true});
+      const resp =await axios.get(`${Server_Url}/api/auth/logout`, {withCredentials:true});
       console.log(resp.data)
       setisAuthenticated(false);
       setuserCred({name:'',email:''})
