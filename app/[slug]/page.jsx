@@ -16,6 +16,7 @@ const city = headersList.get("x-vercel-ip-city")??"";
 
 const location={ip,country,region,city}
 
+
      let targetUrl = null;
 
     if (!slug.startsWith("_")) {} else {
@@ -24,10 +25,12 @@ const location={ip,country,region,city}
 
             const userAgent = headersList.get("user-agent");
 
+                console.log(location)
+
             const resp = await fetch(
                 `${backendURl}/api/user/getClip?slug=${slug}`,
                 {  method:'POST',
-                    headers: {"user-agent": userAgent ?? "",},
+                    headers: {"user-agent": userAgent ?? "","Content-Type": "application/json",},
                     body: JSON.stringify(location)
                 }
             );
