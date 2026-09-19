@@ -15,7 +15,7 @@ export function humanDate(date) {
 
 export default function LinksPage() {
   //let downUrl='http://localhost:3000/'
-      let downUrl='https://frontend-url-blush.vercel.app/'
+      let downUrl='https://www.zyler.com.ng/'
         const { userCred, logout } = useAuth();
         const [links, setlinks] = useState([]);
       
