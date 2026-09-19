@@ -19,10 +19,10 @@ export const Authprovider=({ children })=>{
   const router=useRouter(); 
  const [userCred, setuserCred] = useState({name:'',email:''})
 
- const [Server_Url]=useState("http://localhost:5000/")
+// const [Server_Url]=useState("http://localhost:5000/")
  // const [Frontend_Url]=useState("http://localhost:3000/")
-   const [Frontend_Url]=useState("https://frontend-url-blush.vercel.app/")
-// const [Server_Url]=useState("https://backend-url-pied.vercel.app")
+   const [Frontend_Url]=useState("https://www.zyler.com.ng/")
+const [Server_Url]=useState("https://backend-url-pied.vercel.app")
     const [isAuthenticated, setisAuthenticated] = useState(false);
  
      let isPublicPage; //= pathname === "/";
