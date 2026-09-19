@@ -7,7 +7,8 @@ const AuthContext=createContext({
     isAuthenticated:false,
    login:(data)=>{},
     logout:()=>{}, 
-    Server_Url:'https://backend-url-pied.vercel.app',
+    Server_Url:'',
+    Frontend_Url:'',
     userCred: {id:'',name: '', email: ''}
 
 });
@@ -18,8 +19,10 @@ export const Authprovider=({ children })=>{
   const router=useRouter(); 
  const [userCred, setuserCred] = useState({name:'',email:''})
 
-// const [Server_Url]=useState("http://localhost:5000/api/")
- const [Server_Url]=useState("https://backend-url-pied.vercel.app")
+ const [Server_Url]=useState("http://localhost:5000/")
+ // const [Frontend_Url]=useState("http://localhost:3000/")
+   const [Frontend_Url]=useState("https://frontend-url-blush.vercel.app/")
+// const [Server_Url]=useState("https://backend-url-pied.vercel.app")
     const [isAuthenticated, setisAuthenticated] = useState(false);
  
      let isPublicPage; //= pathname === "/";
@@ -32,7 +35,7 @@ export const Authprovider=({ children })=>{
  
 async function checkAuth() {
   try {
-    const resp= await axios.get(`${Server_Url}/api/auth/checkAuth`,{withCredentials:true});
+    const resp= await axios.get(`${Server_Url}api/auth/checkAuth`,{withCredentials:true});
    setuserCred(resp.data.user)
   console.log(resp.data.user)
 
@@ -67,7 +70,7 @@ async function checkAuth() {
 
 async function logout() {
     try {
-      const resp =await axios.get(`${Server_Url}/api/auth/logout`, {withCredentials:true});
+      const resp =await axios.get(`${Server_Url}api/auth/logout`, {withCredentials:true});
       console.log(resp.data)
       setisAuthenticated(false);
       setuserCred({name:'',email:''})
@@ -84,6 +87,6 @@ function login(data) {
 
 
 
- return (<AuthContext.Provider value={{isAuthenticated,userCred,logout,login,Server_Url}}>{children}</AuthContext.Provider>)
+ return (<AuthContext.Provider value={{isAuthenticated,userCred,logout,login,Server_Url,Frontend_Url}}>{children}</AuthContext.Provider>)
 }
  export  const useAuth=()=>useContext(AuthContext);

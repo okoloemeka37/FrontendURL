@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState ,useRef} from "react";
 import EditDestination from "../../components/EditDestination";
 import { Suspense } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 
 export default function Page(){
@@ -17,9 +18,9 @@ export default function Page(){
 }
 
 function LinkDetailsPage() {
-  //let downUrl='http://localhost:3000/'
-    let downUrl='https://frontend-url-blush.vercel.app/'
-  const [link, setlink] = useState({})
+  const {Frontend_Url}=useAuth()
+
+  const [link, setlink] = useState('')
   const [device, setdevice] = useState([{}]);
   const [location, setlocation] = useState([{}])
     const searchParams=useSearchParams();
@@ -65,12 +66,35 @@ async function copyShort(URL) {
 
     
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans p-6 md:p-10 space-y-8">
+
+    <>
+
+    {link.length==0?(        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950/80 backdrop-blur-md">
+  {/* Dual Ring Spinner */}
+  <div className="relative flex items-center justify-center">
+    {/* Outer Glowing Ring */}
+    <div className="w-16 h-16 rounded-full border-4 border-emerald-500/20 border-t-emerald-500 animate-spin" />
+    
+    {/* Inner Reverse Ring */}
+    <div className="absolute w-10 h-10 rounded-full border-4 border-teal-400/20 border-b-teal-400 animate-[spin_1.5s_linear_infinite_reverse]" />
+    
+    {/* Center Brand Icon Dot */}
+    <div className="absolute w-2 h-2 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/50" />
+  </div>
+
+  {/* Loading Text */}
+  <p className="mt-4 text-xs font-semibold tracking-wider text-slate-400 uppercase animate-pulse">
+    Loading...
+  </p>
+</div>):( <div className="min-h-screen bg-slate-950 text-slate-100 font-sans p-6 md:p-10 space-y-8">
 
             <p ref={alertRef} className="fixed hidden bottom-6 right-6 z-50 flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium tracking-wide px-4 py-2.5 rounded-xl shadow-lg shadow-emerald-950/20 backdrop-blur-md animate-fade-in-up"><span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>Link successfully copied!</p>
 
     {openEdit && <EditDestination link={link} setLink={setlink} openEdit={openEdit} setEdit={setopenEdit} />}
         
+
+
+
 
 
 
@@ -82,7 +106,7 @@ async function copyShort(URL) {
               Links
             </Link>
             <span>/</span>
-            <span className="text-emerald-400 font-mono">{`${downUrl}${link['short']}`}</span>
+            <span className="text-emerald-400 font-mono">{`${Frontend_Url}${link['short']}`}</span>
           </div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-3">
             Link Analytics & Properties
@@ -97,7 +121,7 @@ async function copyShort(URL) {
           <button onClick={()=>setopenEdit(true)} className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-200 transition-all">
             Edit Destination
           </button>
-          <button onClick={()=>{copyShort(`${downUrl}${link['short']}`)}}  className="cursor-pointer px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition-all shadow-md shadow-emerald-500/10">
+          <button onClick={()=>{copyShort(`${Frontend_Url}${link['short']}`)}}  className="cursor-pointer px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition-all shadow-md shadow-emerald-500/10">
             Copy Link
           </button>
         </div>
@@ -107,7 +131,7 @@ async function copyShort(URL) {
       <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-800/80 grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Short Link</span>
-          <p className="text-sm font-semibold text-cyan-400 mt-1 font-mono">{`${downUrl}${link['short']}`}</p>
+          <p className="text-sm font-semibold text-cyan-400 mt-1 font-mono">{`${Frontend_Url}${link['short']}`}</p>
         </div>
         <div className="md:col-span-2">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Original Destination</span>
@@ -174,7 +198,7 @@ async function copyShort(URL) {
                 <span className="text-slate-400">{elt['CityCount']} clicks ({elt['CityPercent']}%)</span>
               </div>
               <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 w-[42%]" />
+                <div className={`h-full bg-gradient-to-r from-emerald-500 to-teal-400 w-[${elt['CityPercent']}%]`} />
               </div>
             </div>
             ))}
@@ -250,6 +274,10 @@ async function copyShort(URL) {
         </div>
       </div>  */}
 
-    </div>
+    </div>)}
+
+   
+    
+    </>
   );
 }

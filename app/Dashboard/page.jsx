@@ -15,9 +15,8 @@ export function humanDate(date) {
 
 
 export default function AdminDashboardPage() {
-  //let downUrl='http://localhost:3000/'
-  let downUrl='https://frontend-url-blush.vercel.app/'
-    const { userCred, logout } = useAuth();
+
+    const { userCred, logout,Frontend_Url } = useAuth();
     const [links, setlinks] = useState([]);
     const [totalC,setTotalC]=useState(0)
     const [error, seterror] = useState('')
@@ -170,12 +169,12 @@ async function copyShort(URL) {
                 {links.length === 0 ? (<tr><td>No Shorten Link</td></tr>) : (
                  links.map(lik=>(
                     <tr key={lik['id']} className="hover:bg-slate-800/20 transition-all">
-                    <td className="p-4 font-medium text-cyan-400">{`${downUrl}${lik['short']}`}</td>
+                    <td className="p-4 font-medium text-cyan-400">{`${Frontend_Url}${lik['short']}`}</td>
                     <td className="p-4 truncate max-w-xs text-slate-300">{lik['original']}</td>
                     <td className="p-4 font-semibold text-slate-200">{lik['clicks']}</td>
                     <td className="p-4 text-slate-500">{humanDate(lik['created_at'])}</td>
                     <td className="p-4 text-right flex ">
-                      <button onClick={()=>{copyShort(`${downUrl}${lik['short']}`)}} className="px-3 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition-all">
+                      <button onClick={()=>{copyShort(`${Frontend_Url}${lik['short']}`)}} className="px-3 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition-all">
                         Copy
                       </button>
                         <Link href={`Dashboard/ViewLinkProps?iop=${encryptId(lik['id'])}`} className="px-3 py-1 rounded-md bg-blue-800 hover:bg-blue-700 text-white font-medium transition-all">
