@@ -3,23 +3,20 @@ import Link from "next/link";
 import { permanentRedirect } from "next/navigation";
 
 export default async function RedirectPage({ params }) {
+    const backendURl='https://backend-url-pied.vercel.app'
+    //const backendURL='http://localhost:5000'
     const { slug } = await params;
     const headersList = await headers();
 
 const ip = headersList.get("x-vercel-forwarded-for");
 
-const country = headersList.get("x-vercel-ip-country");
-const region = headersList.get("x-vercel-ip-country-region");
-const city = headersList.get("x-vercel-ip-city");
+const country = headersList.get("x-vercel-ip-country")??"";
+const region = headersList.get("x-vercel-ip-country-region")??"";
+const city = headersList.get("x-vercel-ip-city")??"";
 
-console.log('visit:',ip,country,region,city)
+const location={ip,country,region,city}
 
-return (<>
-<p>hello</p>
-</>)
-
-
-  /*   let targetUrl = null;
+     let targetUrl = null;
 
     if (!slug.startsWith("_")) {} else {
         try {
@@ -28,11 +25,10 @@ return (<>
             const userAgent = headersList.get("user-agent");
 
             const resp = await fetch(
-                `http://localhost:5000/api/user/getClip?slug=${slug}`,
-                {
-                    headers: {
-                        "user-agent": userAgent ?? "",
-                    },
+                `${backendURl}/api/user/getClip?slug=${slug}`,
+                {  method:'POST',
+                    headers: {"user-agent": userAgent ?? "",},
+                    body: JSON.stringify(location)
                 }
             );
 
@@ -68,6 +64,6 @@ return (<>
       Create Your Own Link
     </Link>
   </div>
-  );} */
+  );} 
 }
 
