@@ -43,7 +43,7 @@ export default function DashboardLayout({ children }) {
       )
     },
     {
-      href: "/Dashboard/Qrcodes",
+      href: "/Dashboard",
       label: "QR Codes",
       icon: (
         <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,7 +57,7 @@ export default function DashboardLayout({ children }) {
       )
     },
     {
-      href: "/Dashboard/Analytics",
+      href: "/Dashboard/",
       label: "Analytics",
       icon: (
         <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,7 +71,7 @@ export default function DashboardLayout({ children }) {
       )
     },
     {
-      href: "/Dashboard/Settings",
+      href: "/Dashboard/",
       label: "Settings",
       icon: (
         <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
