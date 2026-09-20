@@ -52,8 +52,8 @@ const {login}=useAuth()
   
     <div className="flex flex-col items-center mb-8">
      
-      <h1 className="text-2xl font-bold tracking-tight text-slate-100">Welcome back to Zyler</h1>
-      <p className="text-sm text-slate-400 mt-1.5">Sign in to your dashboard to manage your links</p>
+      <h1 className="text-2xl font-bold tracking-tight text-slate-100">Welcome back to Zyler URL Shortener</h1>
+      <p className="text-sm text-slate-400 mt-1.5">Signin to manage your links</p>
     </div>
 
     {/* Form Card */}

@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { useAuth } from "../../context/AuthContext";
 import getLink from "../../Functions/Admin/dashboard";
+import { encryptId } from "../../../lib/hashid";
 import { useEffect, useState,useRef} from "react";
 
 export function humanDate(date) {
@@ -14,9 +15,10 @@ export function humanDate(date) {
 }
 
 export default function LinksPage() {
-  //let downUrl='http://localhost:3000/'
-      let downUrl='https://www.zyler.com.ng/'
-        const { userCred, logout } = useAuth();
+
+  
+        const { userCred, logout,Frontend_Url } = useAuth();
+
         const [links, setlinks] = useState([]);
       
         const [error, seterror] = useState('')
@@ -125,12 +127,12 @@ async function copyShort(URL) {
             <div className="space-y-1.5 max-w-2xl">
               <div className="flex items-center gap-3">
                 <a
-                  href={`${downUrl}${lik['short']}`}
+                  href={`${Frontend_Url}${lik['short']}`}
                   target="_blank"
                   rel="noreferrer"
                   className="text-sm font-bold text-cyan-400 hover:underline font-mono"
                 >
-                  {`${downUrl}${lik['short']}`}
+                  {`${Frontend_Url}${lik['short']}`}
                 </a>
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                   Active
@@ -139,7 +141,7 @@ async function copyShort(URL) {
               </div>
 
               {/* Destination URL */}
-              <p className="text-xs text-slate-400 truncate flex items-center gap-1.5">
+              <p className="text-xs text-slate-400 max-w-md truncate flex items-center gap-1.5" title={lik['original']}>
                 <svg className="w-3.5 h-3.5 text-slate-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
@@ -158,7 +160,7 @@ async function copyShort(URL) {
 
               {/* Action Buttons */}
               <div className="flex items-center gap-2">
-                <button onClick={()=>{copyShort(`${downUrl}${lik['short']}`)}}
+                <button onClick={()=>{copyShort(`${Frontend_Url}${lik['short']}`)}}
                   title="Copy Short Link"
                   className="p-2 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-colors"
                 >
@@ -177,7 +179,7 @@ async function copyShort(URL) {
                 </button> */}
 
                 <Link
-                  href=""
+                  href={`ViewLinkProps?iop=${encryptId(lik['id'])}`}
                   className="px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-xs font-medium text-slate-300 hover:text-white hover:border-slate-700 transition-colors flex items-center gap-1.5"
                 >
                   <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
