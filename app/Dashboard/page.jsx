@@ -149,9 +149,9 @@ async function copyShort(URL) {
           (<div className="rounded-2xl bg-slate-900/40 border border-slate-800/80 overflow-hidden">
             <div className="p-6 border-b border-slate-800/80 flex items-center justify-between">
               <h2 className="text-sm font-bold text-slate-200">Recent Short Links</h2>
-              <button className="text-xs font-semibold text-emerald-400 hover:underline">
+              <Link href={"/Dashboard/Links"} className="text-xs font-semibold text-emerald-400 hover:underline">
                 View All
-              </button>
+              </Link>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs text-slate-400">
