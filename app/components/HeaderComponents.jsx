@@ -25,10 +25,10 @@ export default function HeaderComponents() {
 
       {/* Navigation Links */}
       <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
-        <Link href="/features" className="hover:text-slate-100 transition-colors">
+       {/*  <Link href="/Features" className="hover:text-slate-100 transition-colors">
           Features
-        </Link>
-        <Link href="/pricing" className="hover:text-slate-100 transition-colors">
+        </Link> */}
+      {/*   <Link href="/pricing" className="hover:text-slate-100 transition-colors">
           Pricing
         </Link>
         <Link href="/Linkpi" className="hover:text-slate-100 transition-colors">
@@ -36,7 +36,7 @@ export default function HeaderComponents() {
         </Link>
         <Link href="/docs" className="hover:text-slate-100 transition-colors">
           Docs
-        </Link>
+        </Link> */}
       </nav>
 
       {/* Right Side User Profile / Auth Links */}
