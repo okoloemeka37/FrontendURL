@@ -41,13 +41,31 @@ const QRGenerator = forwardRef(function QRGenerator(
     });
   }, [value, width, height]);
 
-  // Expose methods to the parent
   useImperativeHandle(ref, () => ({
     download(name = "my-qr-code", extension = "png") {
       qrCodeRef.current?.download({
         name,
         extension,
       });
+    },
+
+    async copy() {
+      if (!qrCodeRef.current) return;
+
+      try {
+        const blob = await qrCodeRef.current.getRawData("png");
+
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            "image/png": blob,
+          }),
+        ]);
+
+        return true;
+      } catch (error) {
+        console.error("Failed to copy QR code:", error);
+        return false;
+      }
     },
   }));
 

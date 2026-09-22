@@ -1,6 +1,5 @@
 
 'use client'
-
 import { Bell, User, LogOut, Menu, X } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import Link from "next/link";
@@ -43,7 +42,7 @@ export default function DashboardLayout({ children }) {
       )
     },
     {
-      href: "/Dashboard/",
+      href: "/Dashboard/Qrcode",
       label: "QR Codes",
       icon: (
         <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,7 +55,7 @@ export default function DashboardLayout({ children }) {
         </svg>
       )
     },
-    {
+   /*  {
       href: "/Dashboard/",
       label: "Analytics",
       icon: (
@@ -69,7 +68,7 @@ export default function DashboardLayout({ children }) {
           />
         </svg>
       )
-    },
+    }, */
     {
       href: "/Dashboard/",
       label: "Settings",

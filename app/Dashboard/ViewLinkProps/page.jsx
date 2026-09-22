@@ -7,7 +7,7 @@ import { useEffect, useState ,useRef} from "react";
 import EditDestination from "../../components/EditDestination";
 import { Suspense } from "react";
 import { useAuth } from "../../context/AuthContext";
-
+import QRGenerator from "../../components/QRCmponents";
 
 export default function Page(){
     return (
@@ -25,6 +25,8 @@ function LinkDetailsPage() {
   const [location, setlocation] = useState([{}])
     const searchParams=useSearchParams();
     const link_id=decryptId(searchParams.get('iop'));
+
+    const qrRef = useRef();
 
     useEffect(() => {
       async function rf(params) {
@@ -60,7 +62,22 @@ async function copyShort(URL) {
       alertRef.current.classList.toggle('hidden');
     }, 3000);
   }
-  
+
+
+const handleCopyQR = async () => {
+  const success = await qrRef.current?.copy();
+
+  if (success) {
+    console.log("QR copied!");
+  }
+
+   alertRef.current.classList.toggle('hidden');
+
+    setTimeout(() => {
+      alertRef.current.classList.toggle('hidden');
+    }, 3000);
+};
+
   const [openEdit, setopenEdit] = useState(false)
     
 
@@ -127,17 +144,121 @@ async function copyShort(URL) {
         </div>
       </div>
 
-      {/* Target Properties Overview Card */}
-      <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-800/80 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div>
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Short Link</span>
-          <p className="text-sm font-semibold text-cyan-400 mt-1 font-mono">{`${Frontend_Url}${link['short']}`}</p>
-        </div>
-        <div className="md:col-span-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Original Destination</span>
-          <p className="text-sm font-medium text-slate-200 mt-1 truncate">{link['original']}</p>
+{/* Target Properties Overview Card */}
+<div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-900/40 border border-slate-800/80">
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 items-center">
+
+    
+    <div className="min-w-0 space-y-5">
+
+      {/* Short Link */}
+      <div className="min-w-0">
+        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          Short Link
+        </span>
+
+        <p
+          className="
+            text-sm
+            font-semibold
+            text-cyan-400
+            mt-1
+            font-mono
+            break-all
+            sm:break-normal
+            sm:truncate
+          "
+          title={`${Frontend_Url}${link['short']}`}
+        >
+          {`${Frontend_Url}${link['short']}`}
+        </p>
+      </div>
+
+
+      {/* Original Destination */}
+      <div className="min-w-0">
+        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          Original Destination
+        </span>
+
+        <p
+          title={link['original']}
+          className="
+            text-sm
+            font-medium
+            text-slate-200
+            mt-1
+            break-words
+            truncate
+          "
+        >
+          {link['original']}
+        </p>
+      </div>
+
+    </div>
+
+
+    {/* ================= QR CODE ================= */}
+    <div
+      className="
+        flex
+        items-center
+        gap-3
+        pt-1
+        md:pt-0
+        md:justify-end
+        min-w-0
+      "
+    >
+
+      {/* QR */}
+      <div className="shrink-0 bg-white rounded-lg shadow-sm border border-slate-700">
+        <div className="bg-white p-1.5 rounded-lg">
+          <QRGenerator
+            ref={qrRef}
+            value={`${Frontend_Url}${link['short']}`}
+            width={70}
+            height={70}
+          />
         </div>
       </div>
+
+
+      {/* QR Information */}
+      <div className="flex flex-col min-w-0">
+
+        <span className="text-xs font-semibold text-slate-300">
+          QR Code
+        </span>
+
+        <button
+          type="button"
+          onClick={handleCopyQR}
+          className="
+            text-[10px]
+            text-slate-500
+            hover:text-cyan-400
+            transition-colors
+            text-left
+            truncate
+          "
+        >
+         Copy Code
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
 
       {/* Top Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
