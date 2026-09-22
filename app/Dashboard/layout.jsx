@@ -41,7 +41,7 @@ export default function DashboardLayout({ children }) {
         </svg>
       )
     },
-    {
+  /*   {
       href: "/Dashboard/Qrcode",
       label: "QR Codes",
       icon: (
@@ -54,7 +54,7 @@ export default function DashboardLayout({ children }) {
           />
         </svg>
       )
-    },
+    }, */
    /*  {
       href: "/Dashboard/",
       label: "Analytics",
